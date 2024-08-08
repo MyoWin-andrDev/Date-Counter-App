@@ -76,13 +76,26 @@ public class DateCounter extends AppCompatActivity {
     }
 
     private void showCustomDialog() {
+        var dialogBinding = DialogInputBinding.inflate(getLayoutInflater());
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         AlertDialog dialog = builder
-                .setTitle("This is a dialog")
-                .setMessage("I am a custom dialog for date counter")
-                .setPositiveButton("OK", (dialog1, which) -> Toast.makeText(DateCounter.this, "OK", Toast.LENGTH_SHORT).show())
-                .setNegativeButton("Cancel",((dialog1, which) -> {Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();}))
+                .setView(binding.getRoot())
+                //This is Title and message dialog
+//                .setTitle("This is a dialog")
+//                .setMessage("I am a custom dialog for date counter")
+
+                //This is to another view
+                .setCancelable(false)
+
+                //Commenting toast message of dialog
+//                .setPositiveButton("OK", (dialog1, which) -> Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show())
+//                .setNegativeButton("Cancel",((dialog1, which) -> {Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();}))
                 .create();
+
+        dialogBinding.btnOK.setOnClickListener(v -> {
+            Toast.makeText(this, dialogBinding.etInput.getText().toString(), Toast.LENGTH_LONG).show();
+        });
+
         dialog.show();
     }
 
