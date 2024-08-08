@@ -2,6 +2,7 @@ package com.example.llpconstraint;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -70,13 +71,19 @@ public class DateCounter extends AppCompatActivity {
         }
 
 
-        binding.tvTom.setOnClickListener(v -> {});
-        binding.tvJerry.setOnClickListener(v -> {});
+        binding.tvTom.setOnClickListener( new OnTextClickListener());
+        binding.tvJerry.setOnClickListener(new OnTextClickListener());
     }
 
     private void showCustomDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("This is a dialog").setMessage("I am a custom dialog for date counter").create();
+        AlertDialog dialog = builder
+                .setTitle("This is a dialog")
+                .setMessage("I am a custom dialog for date counter")
+                .setPositiveButton("OK", (dialog1, which) -> Toast.makeText(DateCounter.this, "OK", Toast.LENGTH_SHORT).show())
+                .setNegativeButton("Cancel",((dialog1, which) -> {Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();}))
+                .create();
+        dialog.show();
     }
 
 }
