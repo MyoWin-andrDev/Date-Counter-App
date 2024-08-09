@@ -28,7 +28,10 @@ public class DateCounter extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private  AlertDialog alertDialog;
-    private String name;
+    private String dialogName;
+    private SharedPreferences shared = getSharedPreferences("date_counter",MODE_PRIVATE);
+    private static final String TOM = "Tom";
+    private static final String JERRY = "Jerry";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +40,18 @@ public class DateCounter extends AppCompatActivity {
         binding = ActivityDateCounterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initUI();
+        initDatePickerDialog();
         initDialog();
         initListener();
     }
 
+    private void initUI(){
+        binding.tvTom.setText(readData(TOM));
+        binding.tvJerry.setText(readData(JERRY));
+    }
 
-    private void initUI() {
+
+    private void initDatePickerDialog() {
         //dd/MM/Year
         datePickerDialog = new DatePickerDialog(this);
         datePickerDialog.setOnDateSetListener((view, year, month, dayOfMonth) -> {
@@ -72,7 +81,18 @@ public class DateCounter extends AppCompatActivity {
 
         dialogBinding.btnOK.setOnClickListener(v -> {
             // Toast.makeText(this, dialogBinding.etInput.getText().toString(), Toast.LENGTH_LONG).show();
-            binding.tvJerry.setText(dialogBinding.etInput.getText().toString());
+           // binding.tvJerry.setText(dialogBinding.etInput.getText().toString());
+            String text = dialogBinding.etInput.getText().toString();
+            switch(dialogName){
+               case TOM -> {
+                   binding.tvTom.setText(text);
+                   saveData(TOM,text);
+               }
+               case JERRY ->{
+                   binding.tvJerry.setText(text);
+                   saveData(JERRY,text);
+               }
+            }
             alertDialog.cancel();
         });
 
@@ -98,23 +118,28 @@ public class DateCounter extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                showCustomDialog(name);
+                showCustomDialog(dialogName);
             }
         }
 
 
-        binding.tvTom.setOnClickListener( v ->  showCustomDialog("Tom"));
-        binding.tvJerry.setOnClickListener(v ->  showCustomDialog("Jerry"));
+        binding.tvTom.setOnClickListener( v ->  showCustomDialog(TOM));
+        binding.tvJerry.setOnClickListener(v ->  showCustomDialog(JERRY));
     }
 
     private void showCustomDialog(String name) {
-
-        switch(name){
-            "Tom" -> {}
-            "Jerry" ->
-        }
-
+        dialogName = name;
         alertDialog.show();
     }
 
+    //Save data in shared preference
+    private void saveData(String key , String value){
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putString(key,value);
+        editor.apply();
+    }
+    //Read date from shared preferences
+    private String readData(String key){
+        return shared.getString(key,key);
+    }
 }
