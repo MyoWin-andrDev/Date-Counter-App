@@ -29,7 +29,7 @@ public class DateCounter extends AppCompatActivity {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private  AlertDialog alertDialog;
     private String dialogName;
-    private SharedPreferences shared = getSharedPreferences("date_counter",MODE_PRIVATE);
+    private SharedPreferences shared ;
     private static final String TOM = "Tom";
     private static final String JERRY = "Jerry";
 
@@ -46,6 +46,7 @@ public class DateCounter extends AppCompatActivity {
     }
 
     private void initUI(){
+        shared = getSharedPreferences("date_counter",MODE_PRIVATE);
         binding.tvTom.setText(readData(TOM));
         binding.tvJerry.setText(readData(JERRY));
     }
