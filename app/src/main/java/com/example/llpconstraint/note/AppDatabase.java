@@ -12,7 +12,7 @@ import com.example.llpconstraint.note.entities.Note;
 @Database(entities = {Note.class} , version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
-    public NoteDao noteDao;
+    public abstract NoteDao noteDao();
     private static AppDatabase appDatabase;
     public synchronized static AppDatabase getInstance(Context context){
         if(appDatabase == null){
