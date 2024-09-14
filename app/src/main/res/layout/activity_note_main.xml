@@ -11,7 +11,8 @@
         android:id="@+id/recyclerView"
         tools:listitem="@layout/adapter_note"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingButton"

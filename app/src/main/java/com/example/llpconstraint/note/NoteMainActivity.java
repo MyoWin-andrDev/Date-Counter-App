@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.llpconstraint.R;
@@ -35,11 +36,12 @@ public class NoteMainActivity extends AppCompatActivity {
     private void initDatabase() {
         var database = AppDatabase.getInstance(this);
         noteDao = database.noteDao();
+        noteDao.addNote(new Note("Eat Breakfast","It's time tot eat breakfast"));
         noteList = noteDao.getAllNotes();
     }
     private void initUI(){
         noteAdapter = new NoteAdapter(noteList);
         binding.recyclerView.setAdapter(noteAdapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(this,2));
     }
 }
