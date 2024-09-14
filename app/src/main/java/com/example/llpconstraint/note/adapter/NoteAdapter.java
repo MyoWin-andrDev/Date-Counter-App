@@ -17,6 +17,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public NoteAdapter(List<Note> noteList){
         this.noteList = noteList;
     }
+
+    public void setNoteList(List<Note> noteList) {
+        this.noteList = noteList;
+    }
+
     class NoteViewHolder extends RecyclerView.ViewHolder{
         AdapterNoteBinding binding;
         public NoteViewHolder(AdapterNoteBinding binding) {

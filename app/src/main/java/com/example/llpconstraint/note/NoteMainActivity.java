@@ -1,8 +1,10 @@
 package com.example.llpconstraint.note;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -31,6 +33,7 @@ public class NoteMainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         initDatabase();
         initUI();
+        initListener();
     }
 
     private void initDatabase() {
@@ -43,5 +46,26 @@ public class NoteMainActivity extends AppCompatActivity {
         noteAdapter = new NoteAdapter(noteList);
         binding.recyclerView.setAdapter(noteAdapter);
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+    }
+    private void initListener(){
+        binding.floatingButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EditNoteActivity.class);
+            startActivityForResult(intent,123);
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 123 && resultCode == RESULT_OK){
+            Note note = (Note) data.getSerializableExtra("note");
+            noteDao.addNote(note);
+            refreshNote();
+        }
+    }
+
+    private void refreshNote() {
+        noteList = noteDao.getAllNotes();
+        noteAdapter.setNoteList(noteList);
     }
 }
