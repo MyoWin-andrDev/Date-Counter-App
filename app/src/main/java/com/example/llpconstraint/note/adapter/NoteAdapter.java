@@ -20,6 +20,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     public void setNoteList(List<Note> noteList) {
         this.noteList = noteList;
+        this.notifyDataSetChanged();
     }
 
     class NoteViewHolder extends RecyclerView.ViewHolder{
